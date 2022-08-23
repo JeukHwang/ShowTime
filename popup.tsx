@@ -1,7 +1,16 @@
 import { useState } from "react"
+import { viewRecorder } from "~functions/recorder"
+import { log } from "~functions/util"
 
 function IndexPopup() {
   const [data, setData] = useState("")
+
+  const [watch, setWatch] = useState("")
+  setInterval(async () => {
+    const viewData = await viewRecorder.load();
+    log("watch", Object.freeze(viewData))
+    setWatch(JSON.stringify(viewData))
+  }, 1000)
 
   return (
     <div
@@ -21,6 +30,7 @@ function IndexPopup() {
       <a href="https://docs.plasmo.com" target="_blank">
         View Docs
       </a>
+      <p>{watch}</p>
     </div>
   )
 }
